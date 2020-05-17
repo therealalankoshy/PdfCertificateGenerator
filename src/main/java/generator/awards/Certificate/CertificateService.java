@@ -1,4 +1,4 @@
-package csi.awards.Certificate;
+package generator.awards.Certificate;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

@@ -1,4 +1,4 @@
-package csi.awards.Email;
+package generator.awards.Email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

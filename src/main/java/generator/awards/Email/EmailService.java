@@ -1,4 +1,4 @@
-package csi.awards.Email;
+package generator.awards.Email;
 
 import java.io.File;
 import java.io.IOException;

@@ -15,8 +15,8 @@ public class CertificateController {
 	@Autowired
 	private CertificateService certificateService;
 
-	@GetMapping(value = "create")
+	@GetMapping(value = "api/sample/create")
 	void createCertificate() throws FileNotFoundException, IOException, DocumentException {
-		certificateService.createCertificate();
+		certificateService.createCertificate("Alan Baby Koshy","TVAAKU");
 	}
 }

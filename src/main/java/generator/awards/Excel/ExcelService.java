@@ -20,7 +20,7 @@ public class ExcelService {
 
 	private Integer nameCell = null, emailCell = null, projectCell = null;
     
-	public void loadSheet(Workbook workbook) {
+	public List<CertificateData> loadSheet(Workbook workbook) {
 		Sheet sheet = workbook.getSheet("Data_List");
 		validateIssuesSheet(sheet);
 		List<CertificateData> data = new LinkedList<CertificateData>();
@@ -40,6 +40,7 @@ public class ExcelService {
 				System.out.println(datum);
 			}
 		}
+		return data;
 	}
 
 	private void validateIssuesSheet(Sheet sheet) {
@@ -66,5 +67,4 @@ public class ExcelService {
 		checkNotNull(emailCell, "'Issues' sheet must have a column called %s",EMAIL_ID);
 		checkNotNull(projectCell,"'Issues' sheet must have a column called %s", PROJECT_NAME);
 	}
-
 }

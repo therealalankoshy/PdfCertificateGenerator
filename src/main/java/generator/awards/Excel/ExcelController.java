@@ -1,6 +1,11 @@
 package generator.awards.Excel;
 
+import generator.awards.Certificate.CertificateData;
+import generator.awards.Certificate.CertificateService;
+import generator.awards.Email.EmailService;
+
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -15,9 +20,24 @@ import org.springframework.web.multipart.MultipartFile;
 public class ExcelController {
 	@Autowired
 	private ExcelService excelService;
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private CertificateService certificateService;
+	
     @PostMapping("/api/load/sheet")
     public void uploadSheet(@RequestParam("template") MultipartFile template) throws IOException, InvalidFormatException {
         Workbook workbook = WorkbookFactory.create(template.getInputStream());
-        excelService.loadSheet(workbook);
+		List<CertificateData> data = excelService.loadSheet(workbook);
+		data.forEach(datum->{
+			try {
+				certificateService.createCertificate(datum.getName(), datum.getProjectName());
+				emailService.sendCertificate(datum);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
     }
 }

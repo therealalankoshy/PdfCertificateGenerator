@@ -17,6 +17,6 @@ public class CertificateController {
 
 	@GetMapping(value = "create")
 	void createCertificate() throws FileNotFoundException, IOException, DocumentException {
-		certificateService.createCertificate();
+		certificateService.createCertificate("Alan Baby Koshy","TVAAKU");
 	}
 }

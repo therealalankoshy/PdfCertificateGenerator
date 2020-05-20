@@ -23,6 +23,12 @@ public class EmailService {
 	private String subject;
 	@Value("${email.body}")
 	private String body;
+	@Value("${pdf.location.source}")
+	private String sourcePDFLocation;
+	@Value("${pdf.location.destination}")
+	private String destinationPDFLocation;
+	@Value("${email.from}")
+	private String fromEmail;
 	
 	@Autowired
 	private JavaMailSenderImpl javaMailSenderImpl;
@@ -43,12 +49,10 @@ public class EmailService {
 	public void sendCertificate(CertificateData data) {
 		try {
 			 FileSystemResource file = new FileSystemResource(
-			 new File("/home/alan/Desktop/certificates/"+data.getName().replaceAll("[^a-zA-Z0-9]", "")+"_"+data.getProjectName().replaceAll("[^a-zA-Z0-9]", "")+".pdf"));
-			sendEmail("alan.bk@inapp.com",data.getEmailId(),file);
+			 new File(destinationPDFLocation+data.getName().replaceAll("[^a-zA-Z0-9]", "")+"_"+data.getProjectName().replaceAll("[^a-zA-Z0-9]", "")+".pdf"));
+			sendEmail(fromEmail,data.getEmailId(),file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("API Working");
-	
 	}
 }

@@ -42,7 +42,7 @@ public class EmailService {
 		helper.setSubject(subject);
 		helper.setFrom(from);
 		helper.setText(body, true);
-		helper.addAttachment("Certificate.pdf", file);
+		helper.addAttachment(file.getFilename(), file);
 		javaMailSenderImpl.send(message);
 	}
 

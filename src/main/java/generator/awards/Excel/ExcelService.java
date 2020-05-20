@@ -67,5 +67,4 @@ public class ExcelService {
 		checkNotNull(emailCell, "'Issues' sheet must have a column called %s",EMAIL_ID);
 		checkNotNull(projectCell,"'Issues' sheet must have a column called %s", PROJECT_NAME);
 	}
-
 }

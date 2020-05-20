@@ -10,6 +10,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -17,7 +18,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
-
+	
+	@Value("${email.subject}")
+	private String subject;
+	@Value("${email.body}")
+	private String body;
+	
 	@Autowired
 	private JavaMailSenderImpl javaMailSenderImpl;
 
@@ -27,12 +33,11 @@ public class EmailService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
 		helper.setTo(to);
-		helper.setSubject("Participation Certificate | CSI InApp Awards 2020");
-		helper.setText("Nthaleeeee");
+		helper.setSubject(subject);
 		helper.setFrom(from);
+		helper.setText(body, true);
 		helper.addAttachment("Certificate.pdf", file);
 		javaMailSenderImpl.send(message);
-
 	}
 
 	public void sendCertificate(CertificateData data) {

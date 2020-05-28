@@ -21,11 +21,11 @@ public class CertificateService {
 	@Value("${pdf.location.destination}")
 	private String destinationPDFLocation;
 
-	public void createCertificate(String name, String projectName) throws FileNotFoundException, IOException, DocumentException {
+	public void createCertificate(CertificateData data) throws FileNotFoundException, IOException, DocumentException {
 		PdfReader reader = new PdfReader(sourcePDFLocation);
 		PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(
-				destinationPDFLocation + name.replaceAll("[^a-zA-Z0-9]", "")
-						+ "_" + projectName.replaceAll("[^a-zA-Z0-9]", "")
+				destinationPDFLocation + data.getId().toString().replaceAll("[^a-zA-Z0-9]", "")
+				+ data.getName().replaceAll("[^a-zA-Z0-9]", "")
 						+ ".pdf")); // output PDF
 		BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
 		for (int i = 1; i <= reader.getNumberOfPages(); i++) {
@@ -33,21 +33,21 @@ public class CertificateService {
 			PdfContentByte over = stamper.getOverContent(i);
 
 			// write text for Name
+			// Change the values for Text matrix to Reposition your Data
 			over.beginText();
 			over.setRGBColorFill(170, 28, 35);
 			over.setFontAndSize(bf, 40); // set font and size
 			over.setTextMatrix(265, 261); // set x,y position (0,0 is at the
-											// bottom left)
-			over.showText(name); // set text
+			over.showText(data.getName()); // set text
 			over.endText();
 
 			// write text for Project Name
+			// Change the values for Text matrix to Reposition your Data
 			over.beginText();
 			over.setRGBColorFill(170, 28, 35);
 			over.setFontAndSize(bf, 15); // set font and size
 			over.setTextMatrix(265, 173); // set x,y position (0,0 is at the
-										
-			over.showText(projectName); // set text
+			over.showText(data.getProjectName()); // set text
 			over.endText();
 		}
 		stamper.close();

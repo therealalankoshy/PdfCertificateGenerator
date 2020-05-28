@@ -31,10 +31,10 @@ public class ExcelController {
 		List<CertificateData> data = excelService.loadSheet(workbook);
 		data.forEach(datum->{
 			try {
-				certificateService.createCertificate(datum.getName(), datum.getProjectName());
+				System.out.println(datum.getId());
+				certificateService.createCertificate(datum);
 				emailService.sendCertificate(datum);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});

@@ -4,6 +4,7 @@ import generator.awards.Certificate.CertificateData;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
-	
+	private final static Logger LOGGER =Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	@Value("${email.subject}")
 	private String subject;
 	@Value("${email.body}")
@@ -49,7 +50,10 @@ public class EmailService {
 	public void sendCertificate(CertificateData data) {
 		try {
 			 FileSystemResource file = new FileSystemResource(
-			 new File(destinationPDFLocation+data.getName().replaceAll("[^a-zA-Z0-9]", "")+"_"+data.getProjectName().replaceAll("[^a-zA-Z0-9]", "")+".pdf"));
+			 new File(
+						destinationPDFLocation + data.getId().toString().replaceAll("[^a-zA-Z0-9]", "")
+						+ data.getName().replaceAll("[^a-zA-Z0-9]", "")
+								+ ".pdf"));
 			sendEmail(fromEmail,data.getEmailId(),file);
 		} catch (Exception e) {
 			e.printStackTrace();
